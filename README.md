@@ -1,12 +1,12 @@
 # hetznerdyndns
 This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries.
 # Background
-I owe an own domain, which I liked to use as DynDNS basis instead of using an existing DynDNS service. Either it costs money or has restrictions (like logging in from time to time). My web provider Hetzner provides an [API](https://dns.hetzner.com/api-docs) for handling DNS entries, and I was interested in using this interface for my own purpose. The way, it is designed, cannot be used directly, so some kind of a wrapper is required, which I did in PHP. Thus any DynDNS client could send the update request via HTTP (GET).
+I own an own domain, which I liked to use as DynDNS basis instead of using an existing DynDNS service. Either it costs money or has restrictions (like logging in from time to time). My web provider Hetzner provides an [API](https://dns.hetzner.com/api-docs) for handling DNS entries, and I was interested in using this interface for my own purpose. The way, it is designed, cannot be used directly, so some kind of a wrapper is required, which I did in PHP. Thus any DynDNS client could send the update request via HTTP (GET).
 # Features
 * Turns any IP update into a DNS API request
 * Provides setup routines for a IPv4 and IPv6 at the same time
 # Requirements
-* You need a webserver with PHP support
+* You need a webserver with PHP support (preferably outside your LAN; inside you may encounter issues with https connections)
 * PHP should be enabled for CURL and local file storage
 # Installation
 * Copy the files/directories to a suitable location on your webserver
@@ -18,7 +18,7 @@ I owe an own domain, which I liked to use as DynDNS basis instead of using an ex
 3. Choose the domain/zone in which your DNS entries/records are in
 4. Choose the two entries/records (IPv4 and IPv6) to update (you can also omit one of these, e.g. if you do not have a IPv4 or IPv6)
 5. You're done! The final page shows you an example of the update for a FritzBox router (you might have to alter it for your DynDNS client)
-6. Recommendation: password protect the directories on you webserver (you never know)
+6. Recommendation: use https and password protect the directories on you webserver (you never know)
 # Limitations
 * The script does only minor checks on validity, so use it at own's risk (I am not responsible for any issues caused by it).
 * I am not a professional programmer. Code might be ugly or strange to some extent, but it works (at least for me).
