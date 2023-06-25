@@ -1,5 +1,5 @@
 # hetznerdyndns
-This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries. This one does not have to used with own nameserver or zone file.
+This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries. This one does not have to be used with own nameserver or zone file.
 # Background
 I own an own domain, which I liked to use as DynDNS basis instead of using an existing DynDNS service. Either it costs money or has restrictions (like logging in from time to time). My web provider Hetzner provides an [API](https://dns.hetzner.com/api-docs) for handling DNS entries, and I was interested in using this interface for my own purpose. The way, it is designed, cannot be used directly, so some kind of a wrapper is required, which I did in PHP. Thus any DynDNS client could send the update request via HTTP (GET).
 # Features
