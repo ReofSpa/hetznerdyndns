@@ -1,3 +1,5 @@
+> [!IMPORTANT]
+> This is currently just a preparation branch for the upcoming switch from Hetzner from "DNS Console" to "Hetzner Console". No API information is provided so far, so work on it hasn't started.
 # hetznerdyndns
 This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries. This one does not have to be used with own nameserver or zone file.
 # Background
