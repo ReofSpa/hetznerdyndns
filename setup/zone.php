@@ -22,10 +22,13 @@ WriteArray($hfile, $param);
 $zones = json_decode(hetzner_api_query("https://dns.hetzner.com/api/v1/zones", $param["authid"]), true);
 
 // if there is a message instead, something went wrong, going step back
-if($zones["message"]!=""){
+if(isset($zones["message"])){
 	header('Location: start.php', true, 401);
 	die();
 }
+
+$i = 0;
+
 ?>
 <html>
 <head>

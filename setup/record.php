@@ -28,10 +28,12 @@ WriteArray($hfile, $param);
 $records = json_decode(hetzner_api_query("https://dns.hetzner.com/api/v1/records?zone_id=".$param["zoneid"], $param["authid"]), true);
 
 // if there is a message instead, something went wrong, going back to start
-if($records["message"]!=""){
+if(isset($records["message"])){
 	header('Location: start.php', true, 401);
 	die();
 }
+
+$i = 0;
 
 ?>
 <html>

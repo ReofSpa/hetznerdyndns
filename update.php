@@ -10,11 +10,16 @@ if($param["authid"]=="" || $param["zoneid"]=="" || ($param["recordAid"]=="" && $
 	die();
 }
 
+$ttl = 60;
+if(isset($_GET["ttl"])){
+	$ttl = intval($_GET["ttl"]);
+}
+
 // Check whether a IPv4 address was provided and the A type was defined. Update the DNS entry
-if(!$_GET["ipv4"]=="" && !$param["recordAid"]==""){
+if(isset($_GET["ipv4"]) && !$param["recordAid"]==""){
 	$json_array = [
 		'value' => $_GET["ipv4"],
-		'ttl' => intval($_GET["ttl"]),
+		'ttl' => $ttl,
 		'type' => 'A',
 		'name' => $param["recordA"],
 		'zone_id' => $param["zoneid"]
@@ -26,10 +31,10 @@ if(!$_GET["ipv4"]=="" && !$param["recordAid"]==""){
 }
 
 // Check whether a IPv6 address was provided and the AAAA type was defined. Update the DNS entry
-if(!$_GET["ipv6"]=="" && !$param["recordAAAAid"]==""){
+if(isset($_GET["ipv6"]) && !$param["recordAAAAid"]==""){
 	$json_array = [
 	'value' => $_GET["ipv6"],
-	'ttl' => intval($_GET["ttl"]),
+	'ttl' => $ttl,
 	'type' => 'AAAA',
 	'name' => $param["recordAAAA"],
 	'zone_id' => $param["zoneid"]
