@@ -10,39 +10,31 @@ if($param["authid"]=="" || $param["zoneid"]=="" || ($param["recordAid"]=="" && $
 	die();
 }
 
-$ttl = 60;
-if(isset($_GET["ttl"])){
-	$ttl = intval($_GET["ttl"]);
-}
+$sAFB = "Good";
+$sAAAAFB = "Good";
 
 // Check whether a IPv4 address was provided and the A type was defined. Update the DNS entry
 if(isset($_GET["ipv4"]) && !$param["recordAid"]==""){
-	$json_array = [
-		'value' => $_GET["ipv4"],
-		'ttl' => $ttl,
-		'type' => 'A',
-		'name' => $param["recordA"],
-		'zone_id' => $param["zoneid"]
-	]; 
-	$json = json_encode($json_array);
-	$reply = hetzner_api_query("https://dns.hetzner.com/api/v1/records/".$param["recordAid"], $param["authid"],"PUT",$json);
-
-	echo "IPv4: ". $_GET["ipv4"]."<br>\n";
+	$json = '{"records":[{"value":"'.$_GET["ipv4"].'","comment":"Last updated: '.date('Y-m-d H:i:s', time()).'"}]}';
+	$reply = hetzner_api_query("https://api.hetzner.cloud/v1/zones/".$param["zoneid"]."/rrsets/".$param["recordAid"]."/".$param["recordA"]."/actions/set_records", $param["authid"],"POST",$json);
+	// if there is an error json instead, something went wrong, set to Bad
+	if(isset($reply["error"])){
+		$sAFB = "Bad";
+	}
 }
 
 // Check whether a IPv6 address was provided and the AAAA type was defined. Update the DNS entry
 if(isset($_GET["ipv6"]) && !$param["recordAAAAid"]==""){
-	$json_array = [
-	'value' => $_GET["ipv6"],
-	'ttl' => $ttl,
-	'type' => 'AAAA',
-	'name' => $param["recordAAAA"],
-	'zone_id' => $param["zoneid"]
-	]; 
-	$json = json_encode($json_array);
-	$reply = hetzner_api_query("https://dns.hetzner.com/api/v1/records/".$param["recordAAAAid"], $param["authid"],"PUT",$json);
-	
-	echo "IPv6: ". $_GET["ipv6"]."<br>\n";
+	$json = '{"records":[{"value":"'.$_GET["ipv6"].'","comment":"Last updated: '.date('Y-m-d H:i:s', time()).'"}]}';
+	$reply = hetzner_api_query("https://api.hetzner.cloud/v1/zones/".$param["zoneid"]."/rrsets/".$param["recordAAAAid"]."/".$param["recordAAAA"]."/actions/set_records", $param["authid"],"POST",$json);
+	// if there is an error json instead, something went wrong, set to Bad
+	if(isset($reply["error"])){
+		$sAAAAFB = "Bad";
+	}
 }
 
+// Give Feedback to requesting server about update
+if ($sAFB == "Good" && $sAAAAFB = "Good") {
+	echo "Good";
+}
 ?>
