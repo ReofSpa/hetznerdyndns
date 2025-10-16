@@ -1,9 +1,9 @@
 > [!IMPORTANT]
-> This is currently just a preparation branch for the upcoming switch from Hetzner from "DNS Console" to "Hetzner Console". No API information is provided so far, so work on it hasn't started.
+> Hetzner is testing DNS support in the Hetzner Console in open beta until Nov 10, 2025. Afterwards you will be asked to migrate from DNS to Hetzner Console, which will be forced on April 2026 latest. The API used in DNS Console is different to the Hetzner Console one. This branch supports the Hetzner Console. Use this if you migrated or created the zone after Nov 19, 2025. Else take the [main branch](https://github.com/ReofSpa/hetznerdyndns/tree/main).
 # hetznerdyndns
 This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries. This one does not have to be used with own nameserver or zone file.
 # Background
-I own an own domain, which I liked to use as DynDNS basis instead of using an existing DynDNS service. Either it costs money or has restrictions (like logging in from time to time). My web provider Hetzner provides an [API](https://dns.hetzner.com/api-docs) for handling DNS entries, and I was interested in using this interface for my own purpose. The way, it is designed, cannot be used directly, so some kind of a wrapper is required, which I did in PHP. Thus any DynDNS client could send the update request via HTTP (GET).
+I own an own domain, which I liked to use as DynDNS basis instead of using an existing DynDNS service. Either it costs money or has restrictions (like logging in from time to time). My web provider Hetzner provides an [API](https://docs.hetzner.cloud/reference/cloud#dns) for handling DNS entries, and I was interested in using this interface for my own purpose. The way, it is designed, cannot be used directly, so some kind of a wrapper is required, which I did in PHP. Thus any DynDNS client could send the update request via HTTP (GET).
 # Features
 * Turns any IP update into a DNS API request
 * Provides setup routines for a IPv4 and IPv6 at the same time
@@ -12,8 +12,8 @@ I own an own domain, which I liked to use as DynDNS basis instead of using an ex
 * PHP should be enabled for CURL and local file storage
 # Installation
 * Copy the files/directories to a suitable location on your webserver
-* Create an [API-Token](https://dns.hetzner.com/settings/api-token) (Note it down!)
-* Create an A and/or AAAA entry in your domain/zone via the [DNS panel](https://dns.hetzner.com/) (Sure, I could have created a script for this as well, but you should check what you are doing, and you get direct feedback, if you do something wrong.)
+* Create an API-Token in your [project](https://console.hetzner.com/projects/) / Security / API-Tokens (Note it down!)
+* Create an A and/or AAAA entry in your domain/zone via the [project](https://console.hetzner.com/projects/) / DNS. (Sure, I could have created a script for this as well, but you should check what you are doing, and you get direct feedback, if you do something wrong.)
 # Setup
 1. Open the setup/start.php in the browser
 2. Type in your API token
@@ -27,5 +27,5 @@ I own an own domain, which I liked to use as DynDNS basis instead of using an ex
 * I cannot make wonders happen. E.g. my Synology NAS is not able to transfer the IPv6. Complaints need to go to Synology in this case.
 * If you work with IPv6, make sure you understand the difference between IPv4 (NAT concept) vs. IPv6 (direct address), so running a web server behind the router has the same IPv4 but a different IPv6 address.
 # Trivia
-* This tool was developed on an Android mobile phone with [QuickEdit+](https://play.google.com/store/apps/details?id=com.rhmsoft.edit). Due to my twins I have only rare situations, where I could work on the code and no PC at hand. So, took some weeks to develop. But the kids are cool!! ??
+* This tool was originally developed on an Android mobile phone with [QuickEdit+](https://play.google.com/store/apps/details?id=com.rhmsoft.edit). Due to my twins I had only rare situations, where I could work on the code and no PC at hand. So, took some weeks to develop. But the kids are cool!! ??
 
