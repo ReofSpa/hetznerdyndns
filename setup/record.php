@@ -11,27 +11,33 @@ if($param["authid"]==""){
 }
 
 // if no zone id available either from file or POST, go one step back
-if($param["zoneid"]=="" && $_POST["zoneid"]==""){
+if($param["zoneid"]=="" && !isset($_POST["zoneid"])){
 	header('Location: zone.php', true, 303);
 	die();
 }
 
 // if zone id provided via POST, overwrite existing zone id
-if($_POST["zoneid"]!=""){
+if(isset($_POST["zoneid"])){
 	$param["zoneid"]=$_POST["zoneid"];
 }
 
 // write new parameter file
 WriteArray($hfile, $param);
 
-// query the existing records in zone, output as array
-$records = json_decode(hetzner_api_query("https://dns.hetzner.com/api/v1/records?zone_id=".$param["zoneid"], $param["authid"]), true);
-
-// if there is a message instead, something went wrong, going back to start
-if(isset($records["message"])){
-	header('Location: start.php', true, 401);
-	die();
-}
+// query the existing records in zone, output as array (API uses pagination, so need to loop through pages)
+$records = array();
+$results = array();
+$page = 1;
+do {
+	$results = json_decode(hetzner_api_query("https://api.hetzner.cloud/v1/zones/".$param["zoneid"]."/rrsets?page=".$page, $param["authid"]), true);
+	// if there is an error json instead, something went wrong, going back to start
+	if(isset($results["error"])){
+		header('Location: start.php', true, 401);
+		die();
+	}
+	$records = array_merge($records, $results["rrsets"]);
+	$page++;
+} while ($results["meta"]["pagination"]["last_page"] > $results["meta"]["pagination"]["page"]);
 
 $i = 0;
 
@@ -49,14 +55,12 @@ $i = 0;
 		<label for="recordAid000">No entry</label><br>
 <?php
 // list all A (IPv4) records in zone
-foreach($records["records"] as $record){
-	if($record["type"]=="A" ){
-		$i++;
+foreach(array_filter($records, function ($entry) {return $entry["type"] == "A";}) as $record){
+	$i++;
 ?>
-		<input type="radio" id="recordAid<?php printf("%03s", $i) ?>" name="recordAid" value="<?php echo $record["id"]."/".$record["name"] ?>">
-		<label for="recordAid<?php printf("%03s", $i) ?>"><?php echo $record["name"] ?></label><br>
+	<input type="radio" id="recordAid<?php printf("%03s", $i) ?>" name="recordAid" value="<?php echo $record["id"]."/".$record["name"] ?>">
+	<label for="recordAid<?php printf("%03s", $i) ?>"><?php echo $record["name"] ?></label><br>
 <?php
-	}
 }
 unset($record);
 $i = 0;
@@ -68,14 +72,12 @@ $i = 0;
 		<label for="recordAAAAid000">No entry</label><br>
 <?php
 // list all AAAA (IPv6) records in zone
-foreach($records["records"] as $record){
-	if($record["type"]=="AAAA" ){
-		$i++;
+foreach(array_filter($records, function ($entry) {return $entry["type"] == "AAAA";}) as $record){
+	$i++;
 ?>
-		<input type="radio" id="recordAAAAid<?php printf("%03s", $i) ?>" name="recordAAAAid" value="<?php echo $record["id"]."/".$record["name"] ?>">
-		<label for="recordAAAAid<?php printf("%03s", $i) ?>"><?php echo $record["name"] ?></label><br>
+	<input type="radio" id="recordAAAAid<?php printf("%03s", $i) ?>" name="recordAAAAid" value="<?php echo $record["id"]."/".$record["name"] ?>">
+	<label for="recordAAAAid<?php printf("%03s", $i) ?>"><?php echo $record["name"] ?></label><br>
 <?php
-	}
 }
 unset($record);
 $i = 0;
