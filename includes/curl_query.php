@@ -9,24 +9,24 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $hurl);
 
 // return the transfer as a string
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 // set method
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $hrw);
 
 // set headers
 // changing curl_setopt depending on GET or POST query
-if($hrw!="PUT"){
+if($hrw!="POST"){
 	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-	'Auth-API-Token: ' . $hauth ,
+	'Authorization: Bearer ' . $hauth ,
 	]);
 }else{
 	curl_setopt($ch, CURLOPT_HTTPHEADER, [
-	'Content-Type: application/json',
-	'Auth-API-Token: ' . $hauth ,
+		'Authorization: Bearer ' . $hauth ,
+		'Content-Type: application/json' ,
 	]);
 	// set body
-	curl_setopt($ch, CURLOPT_POST, 1);
+	//curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $hjson);
 }
 // send the request and save response to $response
