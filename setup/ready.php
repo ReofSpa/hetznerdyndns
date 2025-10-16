@@ -46,6 +46,6 @@ WriteArray($hfile, $param);
 <body>
 	<p>Variables defined successfully!</p>
 	<p>Example URL for Fritzbox</p>
-	<p><code><?php echo $_SERVER["REQUEST_SCHEME"]; ?>://&lt;username&gt;:&lt;pass&gt;@<?php echo $_SERVER["HTTP_HOST"].str_replace("setup/ready","update",$_SERVER["PHP_SELF"]); ?>?ipv4=&lt;ipaddr&gt;&amp;ipv6=&lt;ip6addr&gt;&amp;ttl=60</code></p>
+	<p><code><?php echo $_SERVER["REQUEST_SCHEME"]; ?>://&lt;username&gt;:&lt;pass&gt;@<?php echo $_SERVER["HTTP_HOST"].str_replace("setup/ready","update",$_SERVER["PHP_SELF"]); ?>?ipv4=&lt;ipaddr&gt;&amp;ipv6=&lt;ip6addr&gt;</code></p>
 </body>
 </html>
