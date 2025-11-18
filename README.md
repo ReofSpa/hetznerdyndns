@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Hetzner converted the DNS support from the DNS Console to the Hetzner Console since Nov 11, 2025. A forced migration will be done latest April 2026. It is highly recommended to migrate manually before. The API used in DNS Console is different to the Hetzner Console one. This branch supports the outdated DNS Console. Use this if you haven't migrated yet. Else take the [main branch](https://github.com/ReofSpa/hetznerdyndns/tree/hetzner_console).
+> Hetzner converted the DNS support from the DNS Console to the Hetzner Console since Nov 11, 2025. A forced migration will be done latest April 2026. It is highly recommended to migrate manually before. The API used in DNS Console is different to the Hetzner Console one. This branch supports the outdated DNS Console. Use this if you haven't migrated yet. Else take the [main branch](https://github.com/ReofSpa/hetznerdyndns/tree/main).
 # hetznerdyndns
 This is a PHP script for using the Hetzner DNS panel as DynDNS platform from any DynDNS Client capable of creating custom update queries. This one does not have to be used with own nameserver or zone file.
 # Background
